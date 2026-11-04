@@ -20,7 +20,7 @@
     "productName": "ScanRuler",
     "files": ["main.cjs", "app/**/*"],
     "directories": { "output": "release" },
-    "portable": { "artifactName": "ScanRuler-portable.exe" },
-    "zip": { "artifactName": "ScanRuler-win-x64.zip" }
+    "artifactName": "ScanRuler-win-x64.${ext}",
+    "portable": { "artifactName": "ScanRuler-portable.exe" }
   }
 }
