@@ -1,0 +1,26 @@
+{
+  "name": "scanruler-desktop",
+  "productName": "ScanRuler",
+  "version": "1.0.0",
+  "description": "ScanRuler as an offline Windows desktop app",
+  "main": "main.cjs",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "author": "ScanRuler desktop wrapper",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable zip --x64"
+  },
+  "devDependencies": {
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "com.scanruler.desktop",
+    "productName": "ScanRuler",
+    "files": ["main.cjs", "app/**/*"],
+    "directories": { "output": "release" },
+    "portable": { "artifactName": "ScanRuler-portable.exe" },
+    "zip": { "artifactName": "ScanRuler-win-x64.zip" }
+  }
+}

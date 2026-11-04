@@ -1,0 +1,42 @@
+# Builds ScanRuler as an offline Windows app (Electron).
+# Download the result from the run page, under "Artifacts".
+name: Windows EXE
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - name: Build the web app
+        run: |
+          npm ci
+          npm run build
+      - name: Package with Electron
+        shell: bash
+        working-directory: desktop
+        run: |
+          rm -rf app && cp -r ../dist app
+          npm install --no-audit --no-fund
+          npx electron-builder --win portable zip --x64 --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ScanRuler-Windows
+          path: |
+            desktop/release/ScanRuler-portable.exe
+            desktop/release/ScanRuler-win-x64.zip
+          if-no-files-found: error
